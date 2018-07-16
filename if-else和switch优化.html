@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>优化if-else和switch</title>
+</head>
+<body>
+	<script>
+		//有时候大家可能会遇到类似的需求：
+		//比如某平台的信用分数评级，超过700-950，就是信用极好，650-700信用优秀，600-650信用良好，550-600信用中等，350-550信用较差。
+		//一般的实现方法很简单：
+		function showLevel(point) {
+			let _level = '';
+			if(point >= 700) {
+				_level = '信用极好';
+			}
+			else if(point >= 650) {
+				_level = '信用优秀';
+			}
+			else if(point >= 600) {
+				_level = '信用良好';
+			}
+			else if(point >= 550) {
+				_level = '信用中等';
+			}
+			else {
+				_level = '信用较差';
+			}
+			return _level;
+		}
+
+		//运行没问题，代码也容易理解，但是问题也存在：
+		//1.万一以后需求，改了比如650-750是信用优秀，750-950是信用极好。这样就整个方法要改。
+		//2.方法存在各种神仙数字：700，650，600，550。日后的维护可能存在问题。
+		//3.if-else太多，看着有点强迫症
+		
+
+		//这时候可以封装一个通用的look-up函数:
+		function showGrace(grace, level, levelGrace) {
+			for (var i = 0; i < level.length; i++) {
+				if(grace >= level[i]) {
+					return levelGrace[i];
+				}
+			};
+			//如果不存在，那么就是分数很低，直接返回最后一个
+			return levelGrace[levelGrace.length - 1];
+		}
+		let levelGrace = [700, 650, 600, 550];
+		let levelText = ['信用极好', '信用优秀', '信用中等', '信用较差'];
+		
+
+		//再比如输入一个景点，给出景点所在的城市。
+		function getCityForScenic(scenic) {
+		    let _city=''
+		    if(scenic==='广州塔'||scenic==='花城广场'||scenic==='白云山'){
+		        _city='广州'
+		    }
+		    else{
+		        _city='杭州'
+		    }
+		    return _city;
+		}
+		//这些就可以简化成：
+		function getCityForScenic(cityConfigArr, scenic) {
+			if(cityConfigArr && scenic) {
+		    	return cityConfigArr[scenic];
+			}
+		}
+	    let cityConfig = {
+	        '广州塔':'广州',
+	        '花城广场':'广州',
+	        '白云山':'广州',
+	        '西湖':'杭州',
+	        '湘湖':'杭州',
+	        '京杭大运河':'杭州',
+	        '砂之船生活广场':'杭州',
+	        '南宋御街':'杭州',
+	    }
+
+	    //如果看不惯对象的key是中文，也可以这样处理:
+	    function getCityForScenic(cityConfigObj, scenic) {
+		    for(let i = 0;i < cityConfigObj.length; i++){
+		        if(cityConfigObj[i].scenic === scenic){
+		            return cityConfigObj[i].city;
+		        }
+		    }
+		}
+		let cityConfigObj=[
+	        {
+	            scenic:'广州塔',
+	            city:'广州'
+	        },
+	        {
+	            scenic:'花城广场',
+	            city:'广州'
+	        },
+	        {
+	            scenic:'白云山',
+	            city:'广州'
+	        },
+	        {
+	            scenic:'西湖',
+	            city:'杭州'
+	        },
+	        {
+	            scenic:'湘湖',
+	            city:'杭州'
+	        },
+	        {
+	            scenic:'京杭大运河',
+	            city:'杭州'
+	        },
+	        {
+	            scenic:'砂之船生活广场',
+	            city:'杭州'
+	        }
+	    ]
+	    //这样一来，如果以后要加什么景点，对应什么城市，只能修改上面的cityConfigObj，业务逻辑不需要改，也不能改。代码风格上面就做到了统一。
+	    
+	    //同理，来个简单的switch例子，直接上代码:
+	    function getPayChanne(tag){
+		    switch(tag){
+		        case 'cash':
+		        	return '现金';
+		        case 'check':
+		        	return '支票';
+		        case 'draft':
+		        	return '汇票';
+		        case 'zfb':
+		        	return '支付宝';
+		        case 'wx_pay':
+		        	return '微信支付';
+		        default:
+		        	return null;
+		    }
+		}
+		//优化之后:
+	    let payChanneForChinese = {
+		    'cash': '现金',
+		    'check': '支票',
+		    'draft': '汇票',
+		    'zfb': '支付宝',
+		    'wx_pay': '微信支付',
+		};
+		function getPayChanne(tag, chineseConfig){
+		    return chineseConfig[tag];
+		}
+	    
+	    //这里简单总结下，使用配置数据和业务逻辑分离的形式，好处
+	    //1.修改配置数据比业务逻辑修改成本更小，风险更低
+	    //2.配置数据来源和修改都可以很灵活
+	    //3.配置和业务逻辑分离，可以更快的找到需要修改的代码
+	    //4.配置数据和业务逻辑可以让代码风格统一
+	    
+	    //当然，并不是所有的if-else都需要进行改造，具体情况还是要具体分析。
+	</script>
+</body>
+</html>
