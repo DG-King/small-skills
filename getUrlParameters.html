@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>getUrlParameters</title>
+</head>
+<body>
+	<script>
+        //第一种：
+     	function getURLParameter(url, name){
+            return (RegExp(name + '=' + '(.+?)(&|$)').exec(url)||[,null])[1];
+        }
+
+        var url = window.location.href;
+
+        console.log(getURLParameter(url, "isProbation"));
+
+
+        //第二种：
+        /**
+         * 用正则获取当前页面url参数
+         * @param  {[type]} name 参数名
+         * @return {[type]}      [description]
+         */
+        function getQueryString(name) {
+
+            var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+
+            //获取url "?"符后的字符串并正则匹配
+            var r = window.location.search.substr(1).match(reg);
+
+            if (r != null) {
+                return decodeURIComponent(r[2]);
+            }
+            
+            return null;
+        }
+	</script>
+</body>
+</html>
