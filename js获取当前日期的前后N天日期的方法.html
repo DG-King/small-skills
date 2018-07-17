@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js获取当前日期的前后N天日期的方法</title>
+</head>
+<body>
+	<script>
+		function GetDateStr(AddDayCount) { 
+			
+			var nowDate = new Date(); 
+
+			nowDate.setDate(nowDate.getDate() + AddDayCount);//获取AddDayCount天后的日期 
+
+			var year = nowDate.getFullYear(); 
+
+			var month = (nowDate.getMonth() + 1) < 10 ? "0" + (nowDate.getMonth() + 1) : (nowDate.getMonth() + 1);//获取当前月份的日期，不足10补0
+
+			var day = nowDate.getDate()< 10 ? "0" + nowDate.getDate() : nowDate.getDate(); //获取当前几号，不足10补0
+
+			return year + "-" + month + "-" + day; 
+		}
+
+		//调用: 0代表今天，正数代表后N天，负数代表前N天
+	</script>
+</body>
+</html>
