@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>根据年月获取天数</title>
+</head>
+<body>
+    <script>
+        // 正常根据年份月份判断时间都需要判断闰年，然后根据不同月份返回天数。
+        // 这边根据Date()的文档，可以很容易的根据年月返回天数。
+        new Date(year, month, 0).getDate();
+        // 测试一哈：
+        console.log(new Date(2008, 2, 0).getDate()); //29
+        console.log(new Date(2009, 2, 0).getDate()); //28
+        console.log(new Date(2009, 3, 0).getDate()); //31
+        console.log(new Date(2009, 4, 0).getDate()); //30
+
+        // 原理：
+        // 先说getDate()返回某一个某个时间的天数
+        // new Date(year, month)这个比较常见是设置某年某月，但是月份是0-11;
+        // new Date(year, month, 0)这个第三个参数代表的是月份中的某一天，从1开始，1代表第一天.....，0是不在取值范围内的。
+        // 根据ES规范里面，传入year/month/day来获取一个新的日期实例时，会先获取指定年、月的1号，如new Date(2017, 4)就先获取2017年5月1号，然后这个日期加上day参数的整数值，然后减一。
+        // 即2017-5-1加上0减去1，就是2017-4-30；然后获取2017-4-30的日期就是30(月末月后一天)就是当月的天数。
+        // 这里还有一个小问题，月份是0-11；在new Date(year, month, 0).getDate(); 1代表2月，所以new Date(year, 1, 0).getDate()可以获取1月的天数，new Date(year, 2, 0).getDate()可以获取2月的天数....
+        // 那么12月呢，可以用new Date(year, 0, 0).getDate()可以获取12月的天数，当然，由于月份0-11算一轮，12-23又算一轮这样。
+        // 12月份也可以用在new Date(year, 12, 0).getDate()来获取(即1月)
+
+        // 总结:
+        // 获取某年某月的天数：
+        function getDateByTime(year, month){
+            return new Date(year, month, 0).getDate();
+        }
+    </script>
+</body>
+</html>

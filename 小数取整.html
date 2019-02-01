@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>小数取整</title>
+</head>
+<body>
+    <script>
+        // 说起取整，第一反应是Number.parseInt(),当然，除了这个，还有一些比较有趣的取整方法:
+        console.log(~~3.1);//3--------取两次按位非
+        console.log(3.1|0);//3--------与0按位或
+        console.log(3.1^0);//3--------与0按位异或
+        console.log(3.1<<0);//3-------左移0位
+        console.log(3.1>>0);//3-------右移0位
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>获取值的类型</title>
+</head>
+<body>
+    <script>
+        // 常见的获取值的类型方法有一下几种:
+        // 1.typeof  简单的数据类型判断，栈区
+        // 2.instanceof 复杂的数据类型，堆区
+        // 3.constructor 复杂的数据类型，主要是用在继承的改写指向的构造函数，很少用于判断类型
+        // 4.Object.prototype.toString.call()  绝大多数库底层都是使用该方式，返回值如[object String]
+        
+        // 这边研究的是第四种，也就是Object.prototype.toString.call();
+        // 如:
+        var toString = Object.prototype.toString;
+        console.log(toString.call(undefined)); // [object Undefined]
+        console.log(toString.call(null)); // [object Null]
+        console.log(toString.call(true)); // [object Boolean]
+        console.log(toString.call(1)); // [object Num]
+        console.log(toString.call([])); // [object Array]
+        
+        // 因此获取类型的方法可以封装成一个方法:
+        function variableType(variable){
+            var type = Object.prototype
+                        .toString
+                        .call(variable)
+                        .replace(/\[object\s|\]/g,'');
+            return type;
+        }
+        variableType(1);//Number;
+    </script>
+</body>
+</html>
