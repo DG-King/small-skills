@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>iOS异步播放audio</title>
+</head>
+<body>
+    <script>
+        // 需求：最近遇到一个需求，用户首次点击按钮，弹窗提示是否播放audio，确认播放就去请求数据，然后返回audio的url进行播放。
+        // 问题：安卓中表现正常，预期所显示。iOS中首次点击播放由于异步请求回来的src，不能自动调用play()，导致再次点击按钮才能播放。
+        // 解决方法：我采用的是在页面中写入audio标签，动态插入source的src方式。
+        // 1.弹窗确定的时候插入默认音频，并静音播放，然后暂停;
+        // (eg:var localSrc = './waveAudio/wave.mp3';waveFunction.createWave(localSrc).muted(true).play().pause();)
+        // 2.异步请求回来之后，修改source的src地址，并重新load音频，取消静音，最后播放请求回来的音频
+        // (eg:document.getElementById("waveAudio").setAttribute("src", waveUrl);waveFunction.load().muted(false).play();)
+
+
+        // 拓展:
+        // 由于是iOS中遇到的问题，所以判断iOS进行特殊处理即可。判断iOS的代码如下：
+        var u = navigator.userAgent;
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);//true --- iOS
+    </script>
+</body>
+</html>
