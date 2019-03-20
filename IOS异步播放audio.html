@@ -10,11 +10,19 @@
     <script>
         // 需求：最近遇到一个需求，用户首次点击按钮，弹窗提示是否播放audio，确认播放就去请求数据，然后返回audio的url进行播放。
         // 问题：安卓中表现正常，预期所显示。iOS中首次点击播放由于异步请求回来的src，不能自动调用play()，导致再次点击按钮才能播放。
+        
         // 解决方法：我采用的是在页面中写入audio标签，动态插入source的src方式。
+        
         // 1.弹窗确定的时候插入默认音频，并静音播放，然后暂停;
         // (eg:var localSrc = './waveAudio/wave.mp3';waveFunction.createWave(localSrc).muted(true).play().pause();)
+        
         // 2.异步请求回来之后，修改source的src地址，并重新load音频，取消静音，最后播放请求回来的音频
         // (eg:document.getElementById("waveAudio").setAttribute("src", waveUrl);waveFunction.load().muted(false).play();)
+        
+        // 补充：为啥更换src需要对audoi标签进行重新load呢？
+        // 究其原因，video 标签和audio 标签不同于一般的 img 多媒体标签，更换 DOM 或者属性值就能使其激活生效。
+        // video 标签和 audio 标签本身具有了时间特性，因而采用了不同的模式。
+        // 所以在播放视频之前，需要调用 video 的 load 方法来重新加载更新视频。
 
 
         // 拓展:
