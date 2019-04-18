@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>查询值是否在数组中</title>
+</head>
+<body>
+    <script>
+        // 在ES5中，查询数组中是否包含某个值，我们通常用indexOf来判断，如:
+        if(arr.indexOf(targetNum) > -1)
+        {
+            // 存在
+        }
+        else
+        {
+            // 不存在
+        }
+        // 在ES6中，提供了一个数组的新方法includes来判断，如:
+        if(arr.includes(targetNum))
+        {
+            // 存在
+        }
+        else
+        {
+            // 不存在
+        }
+        // 其实除了这些，还有一个通过异位运算的方法，如:
+        if(~arr.indexOf(targetNum))
+        {
+            // 存在
+        }
+        else
+        {
+            // 不存在
+        }
+        // 其实原理就是将indexOf得出的结果进行异位运算，如果不存在异位结果为0，然后根据隐式类型转换0转化为false。
+    </script>
+</body>
+</html>
