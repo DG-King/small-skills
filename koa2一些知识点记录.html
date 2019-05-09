@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>KOA2知识点记录</title>
+</head>
+<body>
+    <script>
+        // 最近接触koa2对接微信公众号，目前遇到一些问题记录一下：
+
+        // 1.关于async await
+        // 其实一个函数加上async就代表了是一个异步函数，这个坑不多。
+        // 在await function中，function是一个异步函数（简单如计时器，或者promise等），await意思就是等这个函数运行完在进行。
+        // 所以一个简单的async await函数就是：
+        function show() {
+            return new Promise((resolve, reject) => {
+                // 模拟请求
+                setTimeout(() => {
+                    resolve(111);
+                }, 2000)
+            })
+        }
+
+        async function demo() {
+            let res = await show();//await 函数正常是进行异步操作的
+            console.log(res); //111,这边接下来的代表上面await show函数的异步请求已经结束
+        }
+
+        // koa2中间件问题
+        // 几个要注意的点：
+        // 1.中间件必须返回async函数。
+        // 2.必须调用await next()进入下一个中间件，否则会出现意想不到的错误。
+        // 3.koa2的中间件是洋葱圈形式，所以会从最开始的中间件进入，一层层到最后一个中间件，然后又从最后一个中间件一层一层返回第一个中间件。
+        // 一个简单的中间件demo:
+        function otherOpt(config) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(111);
+                }, 2000)
+            })
+        }
+
+        module.exports = function(opt) {
+            return async function(ctx, next) {
+                // 如果有异步操作需要return一个promise，同步的话不用
+                return new Promise((resolve, reject) => {
+                    let res = await otherOpt(config);
+                    // res: 111;
+                    resolve();
+                }).
+                then(async () => {//这边一定要用async，然后next是await调用，这样才能确保中间件的执行，否则会出现意外的bug!!!!
+                    await next();
+                })
+                // 若都是同步操作，直接await next()即可。
+            }
+        }
+    </script>
+</body>
+</html>
