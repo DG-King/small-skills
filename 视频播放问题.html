@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频播放问题</title>
+</head>
+<body>
+    <script>
+        // 在RN webview中，遇到一个视频只有声音没有图像的问题。刚开始以为是代码问题，后面把视频文件下载下来播放器可以播放，但是谷歌浏览器却显示不出来。
+        // 于是查了一些资料，(http://kf.uc.cn/self_service/web/faqdetails-9205043_9205352_20625392_6.html)
+        // 用ffmpeg查了一下视频的编码确实是hevc的，所以导致视频只有声音没有画面。
+        // 解决办法：
+        // 在RN端上传给服务端的时候，node服务端使用ffmpeg(fluent-ffmpeg)对视频进行转码，代码如下:
+        ffmpeg('/path/1.avi')
+        .videoCodec('libx264')
+        .audioCodec('libmp3lame')
+        .on('error', function(err) {
+            console.log('An error occurred: ' + err.message);
+        })
+        .on('end', function() {
+            console.log('Processing finished !');
+        })
+        .save('/path/1.mp4');
+    </script>
+</body>
+</html>
