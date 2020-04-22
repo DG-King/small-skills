@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var url = "http://www.baid.com:80/123/456?id=1&age=12#hash";
+        var elementNode = document.createElement("a");
+        elementNode.setAttribute("href", url);
+        console.log("origin", elementNode.origin); //origin http://www.baid.com
+        console.log("protocol", elementNode.protocol); //protocol http:
+        console.log("host", elementNode.host); //host www.baid.com
+        console.log("hostname", elementNode.hostname); //hostname www.baid.com
+        console.log("pathname", elementNode.pathname); //pathname /123/456
+        console.log("search", elementNode.search); //search ?id=1&age=12
+        console.log("hash", elementNode.hash); //hash #hash
+    </script>
+</body>
+</html>
