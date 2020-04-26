@@ -1,0 +1,18 @@
+@charset "utf-8";
+.cascaderbox .hid{visibility: hidden;}
+.cascaderbox{width: 320px; height: 42px; line-height: 40px; position: relative;}
+.cascaderbox .inputbox{width: 100%; height: 42px; border:1px solid #e4e7ed; border-radius: 8px; cursor: pointer; position: relative;}
+.cascaderbox .searchtxt{display: inline-block; box-sizing: border-box; width: 85%; height: 40px; line-height: 40px; margin-left: 5%; border:0 none; overflow: hidden; text-overflow: ellipsis; color: #606266;}
+.cascaderbox .arrdown{float: right; display: inline; width: 16px; height: 16px; background: url('../img/ld_dot.png') left top no-repeat; margin-right: 10px; margin-top: 13px;transition: transform .3s;}
+.cascaderbox.open .arrdown{transform: rotate(180deg);}
+.cascaderbox .dlist{position: absolute;left: 0;top: 48px; white-space: nowrap; background-color: #fff; border:1px solid #e4e7ed; height: 300px; overflow: hidden; z-index: 999;}
+.cascaderbox .dlist_ul{min-width: 160px; display: inline-block; border-right: 1px solid #e4e7ed;  padding:0 10px; height: 300px; overflow: auto;}
+.cascaderbox .dlist_ul:last-child{border-right: 0 none;}
+.cascaderbox .item,.cascaderbox .item2{padding:5px 10px; background: url('../img/ld_dr.png') right 18px no-repeat; max-width: 250px;overflow:hidden; text-overflow: ellipsis; cursor: pointer;}
+.cascaderbox .dlist_search .item2{background: none; max-width: 350px;}
+.cascaderbox .item:hover,.cascaderbox .item.on{color: #409EFF;}
+.cascaderbox .item.lastchild{background: 0 none;}
+.cascaderbox .labelshow{position: absolute; left: 20px; top:0px; width: 90%; display: inline-block; height: 42px; color: #606266; overflow: hidden; text-overflow: ellipsis;}
+.cascaderbox .searchdlist,.cascaderbox .searchdlist .dlist_ul{height: auto;max-height: 300px;}
+.cascaderbox .labelshow.hid{display: none;}
+.cascaderbox .nosearch{color: #c0c4cc; height: 30px;}
