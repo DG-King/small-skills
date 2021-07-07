@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单粗暴的移动端适配</title>
+</head>
+<body>
+    <script>
+        // 不借助webpack等其他辅助工具
+
+        // 方法一:
+        // html 设置 font-size: 100px;
+        // 然后下面子级在设计稿上是多少px就转化成xx px / 100 rem
+        // 比如：16px》》》》》.16rem
+        // 这样好处是简单，但是需要注意的时候，因为font-size固定死100px，所以在各个分辨率下.16rem的表现均为16px
+
+        // 可以直接使用下面的js设置meta和html 的font-size，然后直接使用rem即可(首先使用这种方法开发，简单粗暴》》》》》》》》》》》》》》》)
+        // 案例：美团的移动端(http://i.meituan.com/)使用这种方法，但是美团做了一个处理，就是在笔记本屏幕分辨率以上，font-size：50px；降低整个页面的大小，可以更好的适配
+        // 相应的script为:
+        // 根据屏幕大小及dpi调整缩放和大小，同时不写meta，meta用js中插入
+        // (function() {
+        //     var scale = 1.0;
+        //     var ratio = 1;
+        //     if (window.devicePixelRatio >= 2) {
+        //         scale *= 0.5;
+        //         ratio *= 2;
+        //     }
+        //     var text = '<meta name="viewport" content="initial-scale=' + scale + ', maximum-scale=' + scale +', minimum-scale=' + scale + ', width=device-width, user-scalable=no" />';
+        //     document.write(text);
+        //     document.documentElement.style.fontSize = 50*ratio + "px";
+        // })();
+    
+
+
+        // 方法二：
+        // html 设置 font-size: 13.33333333vw;(实际上就是100px / 750px * 100% = 13.3333vw)
+        // 然后下面子级在设计稿上是多少px就转化成xx px / 100 rem
+        // 比如：16px》》》》》.16rem
+        // 这样好处是大小适配，自适应，使用简单，但是要注意，边界情况判断（即非移动端屏幕的时候要固定大小，不然的话，在比如1920上会很大）
+
+        // 两种写法都可以，看具体情况选用即可
+        // 其他案例可参考https://juejin.cn/post/6847902224740253709
+    </script>
+</body>
+</html>
