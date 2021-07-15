@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扁平数据结构转Tree</title>
+</head>
+<body>
+    <script>
+        let arr = [
+            {id: 1, name: '部门1', pid: 0},
+            {id: 2, name: '部门2', pid: 1},
+            {id: 3, name: '部门3', pid: 1},
+            {id: 4, name: '部门4', pid: 3},
+            {id: 5, name: '部门5', pid: 4},
+        ]
+        // res = [
+        //     {
+        //         "id": 1,
+        //         "name": "部门1",
+        //         "pid": 0,
+        //         "children": [
+        //             {
+        //                 "id": 2,
+        //                 "name": "部门2",
+        //                 "pid": 1,
+        //                 "children": []
+        //             },
+        //             {
+        //                 "id": 3,
+        //                 "name": "部门3",
+        //                 "pid": 1,
+        //                 "children": [
+        //                     // 结果 ,,,
+        //                 ]
+        //             }
+        //         ]
+        //     }
+        // ]
+
+        // 该实现的时间复杂度为O(n)，需要一个Map把数据存储起来，空间复杂度O(n)
+        // 方法一
+        function arrayToTree(items) {
+            const result = [];   // 存放结果集
+            const itemMap = {};  // 
+            for (const item of items) {
+                const id = item.id;
+                const pid = item.pid;
+
+                if (!itemMap[id]) {
+                    itemMap[id] = {
+                        children: [],
+                    }
+                }
+
+                itemMap[id] = {
+                    ...item,
+                    children: itemMap[id]['children']
+                }
+
+                const treeItem =  itemMap[id];
+
+                if (pid === 0) {
+                    result.push(treeItem);
+                } else {
+                    if (!itemMap[pid]) {
+                        itemMap[pid] = {
+                        children: [],
+                        }
+                    }
+                    itemMap[pid].children.push(treeItem)
+                }
+
+            }
+            return result;
+        }
+        console.log("arrayToTree", arrayToTree(arr));
+
+
+        // 方法二
+        function tree(arr, pid = 0) {
+            return arr.filter(_ => _.pid == pid).map(_ => ({..._, children: tree(arr, _.id)}))
+        }
+        console.log("tree", tree(arr));
+    </script>
+</body>
+</html>
